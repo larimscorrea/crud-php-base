@@ -1,5 +1,18 @@
 <?php 
 
+session_start();
+
+if(isset($_SESSION['userId'])) {
+    require('./config/db.php');
+
+    $userId = $_SESSION['userId'];
+
+    $stmt = $pdo -> prepare('SELECT * FROM users WHERE id = ? ');
+    $stmt->execute(['$userId']);
+
+    $user = $stmt -> fetch();
+}
+
 if(isset($_POST['register'])) {
     require('./config/db.php');
 
@@ -7,6 +20,8 @@ if(isset($_POST['register'])) {
     // $userName = $_POST["userName"]; 
     // $userEmail = $_POST["userEmail"];
     // $password = md5($_POST["password"]);
+
+
 
     if(isset($_POST['userName'])) {
         $userName = filter_var( $_POST["userName"], FILTER_SANITIZE_STRING);
@@ -52,30 +67,25 @@ if(isset($_POST['register'])) {
 
 <div class="container">
     <div class="card">
-        <div class="card-header bg-light mb-3">Registre-se</div>
+        <div class="card-header bg-light mb-3">Atualize seus dados</div>
         <div class="card-body"> 
-            <form action="register.php" method="POST">
+            <form action="profile.php" method="POST">
 
                 <div class="form-group">
                     <label for="userName">User Name</label>
-                    <input required type="text" name="userName" class="form-control" />
+                    <input required type="text" name="userName" class="form-control" value="<?php echo $user->name ?>" />
                 </div>
 
                 <div class="form-group">
                     <label for="userEmail">User Email</label>
-                    <input required type="email" name="userEmail" class="form-control" />
+                    <input required type="email" name="userEmail" class="form-control" value="<?php echo $user->email ?>" />
                 <br />
                 <?php if(isset($emailTaken)) { ?> 
                 <p style="color: red"> <?php echo $emailTaken?> </p>
                 <?php } $emailTaken ?>
             </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input required type="password" name="password" class="form-control" />
-                </div>
-
-                <button name="register" class="btn btn-primary" type="submit">Register</button>
+                <button name="edit" class="btn btn-primary" type="submit">Atualize seus dados.</button>
 
             </form>
         </div>
