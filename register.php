@@ -8,23 +8,23 @@ if(isset($_POST['register'])) {
     // $userEmail = $_POST["userEmail"];
     // $password = md5($_POST["password"]);
 
-    if(isset($_POST['userName'])) {
-        $userName = filter_var( $_POST["userName"], FILTER_SANITIZE_STRING);
-    } else if(isset($_POST['userEmail'])) {
-        $userEmail = filter_var( $_POST["userEmail"], FILTER_SANITIZE_EMAIL);
-    } else if(isset($_POST['password'])) {
-        $password = filter_var( $_POST["password"], FILTER_SANITIZE_STRING); 
-    } else if(isset($_POST['passwordHashed'])) {
-        $passwordHashed = password_hash($password, PASSWORD_DEFAULT); //Substitui o macete do md5.
-    }
+    // if(isset($_POST['userName'])) {
+    //     $userName = filter_var( $_POST["userName"], FILTER_SANITIZE_STRING);
+    // } else if(isset($_POST['userEmail'])) {
+    //     $userEmail = filter_var( $_POST["userEmail"], FILTER_SANITIZE_EMAIL);
+    // } else if(isset($_POST['password'])) {
+    //     $password = filter_var( $_POST["password"], FILTER_SANITIZE_STRING); 
+    // } else if(isset($_POST['passwordHashed'])) {
+    //     $passwordHashed = password_hash($password, PASSWORD_DEFAULT); //Substitui o macete do md5.
+    // }
 
-    // $userName = filter_var( $_POST["userName"], FILTER_SANITIZE_STRING);
-    // $userEmail = filter_var( $_POST["userEmail"], FILTER_SANITIZE_EMAIL);
-    // $password = filter_var( $_POST["password"], FILTER_SANITIZE_STRING); 
-    // $passwordHashed = password_hash($password, PASSWORD_DEFAULT); //Substitui o macete do md5.
+    $userName = filter_var( $_POST["userName"], FILTER_SANITIZE_STRING);
+    $userEmail = filter_var( $_POST["userEmail"], FILTER_SANITIZE_EMAIL);
+    $password = filter_var( $_POST["password"], FILTER_SANITIZE_STRING); 
+    $passwordHashed = password_hash( $_POST["password"], PASSWORD_DEFAULT); //Substitui o macete do md5.
 
 
-    if( filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
+    if( filter_var($userEmail, FILTER_VALIDATE_EMAIL) ) {
         $stmt = $pdo -> prepare('SELECT * FROM users WHERE email = ? ');
         $stmt -> execute([$userEmail]);
         $totalUsers = $stmt -> rowCount();
@@ -37,7 +37,7 @@ if(isset($_POST['register'])) {
             $emailTaken = "Email já adicionado";
         } else {
             $stmt = $pdo -> prepare('INSERT into users(name, email, password) VALUES(? , ? , ? )');
-            $stmt -> execute([ $userName, $userEmail, $password] );
+            $stmt -> execute( [ $userName, $userEmail, $passwordHashed] );
 
         }
     }
@@ -64,11 +64,11 @@ if(isset($_POST['register'])) {
                 <div class="form-group">
                     <label for="userEmail">User Email</label>
                     <input required type="email" name="userEmail" class="form-control" />
-                <br />
-                <?php if(isset($emailTaken)) { ?> 
-                <p style="color: red"> <?php echo $emailTaken?> </p>
-                <?php } $emailTaken ?>
-            </div>
+                    <br />
+                    <?php if(isset($emailTaken)) { ?> 
+                    <p style="color: red"> <?php echo $emailTaken?> </p>
+                    <?php } $emailTaken ?>
+                </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>

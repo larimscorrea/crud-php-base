@@ -6,7 +6,7 @@ if( isset($_SESSION['userId'])) {
 
     $userId = $_SESSION['userId']; // 3
 
-    $stmt = $pdo -> prepare('SELECT * FROM useres WHERE id = ?');
+    $stmt = $pdo -> prepare('SELECT * FROM users WHERE id = ?');
     $stmt -> execute([ $userId ]);
 
     $user = $stmt -> fetch();
@@ -32,11 +32,11 @@ if( isset($_SESSION['userId'])) {
           <?php } ?>
         </div>
         <div class="card-body">
-            <div class="card-header">
+
             <?php if(isset($user)) { ?>
-                <h5>Esse conteúdo só pode ser visualizado por pessoas logadas. Faça seu login e tenha acesso. </h5>
+                <h5>Esse conteúdo só pode ser visualizado por pessoas logadas. Faça seu <a href="login.php">login</a> e tenha acesso. </h5>
            <?php } else { ?>
-            <h4>Por, faça login ou registre-se para ter acesso a todo conteúdo.</h4>
+                <h4>Por favor, faça <a href="login.php">login</a> ou <a href="register.php">registre-se</a> para ter acesso a todo conteúdo.</h4>
             <?php } ?>
         </div>
     </div>

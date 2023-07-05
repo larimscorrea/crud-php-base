@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-if(isset($_POST['login'])) {
+if(isset( $_POST['login'])) {
     require('./config/db.php');
 
     $userEmail = filter_var( $_POST["userEmail"], FILTER_SANITIZE_EMAIL);
