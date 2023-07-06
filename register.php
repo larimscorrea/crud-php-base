@@ -39,6 +39,8 @@ if(isset($_POST['register'])) {
             $stmt = $pdo -> prepare('INSERT into users(name, email, password) VALUES(? , ? , ? )');
             $stmt -> execute( [ $userName, $userEmail, $passwordHashed] );
 
+            header('Location: http://localhost/servidor-crud-base/index.php');
+
         }
     }
 

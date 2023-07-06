@@ -1,4 +1,5 @@
 <?php
+
     $host = 'localhost';
     $user = 'root';
     $password = '';
@@ -6,7 +7,7 @@
 
 
     // set database source name
-    $dsn = 'mysql:host=' . $host . ';dbname=' . $dbname;
+    $dsn = 'mysql:host=' . $host . '; dbname=' . $dbname;
 
     try {
         //Cria instância PDO
@@ -20,5 +21,4 @@
         echo "Conexão falhou: " . $e->getMessage();
 
     }
-
 ?>

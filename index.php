@@ -4,7 +4,7 @@ session_start();
 if( isset($_SESSION['userId'])) {
     require('./config/db.php');
 
-    $userId = $_SESSION['userId']; // 3
+    $userId = $_SESSION['userId']; 
 
     $stmt = $pdo -> prepare('SELECT * FROM users WHERE id = ?');
     $stmt -> execute([ $userId ]);
