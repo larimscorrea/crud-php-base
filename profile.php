@@ -29,22 +29,24 @@ if(isset($_SESSION['userId'])) {
     <div class="card">
         <div class="card-header bg-light mb-3">Atualize seus dados</div>
         <div class="card-body"> 
-            <form action="profile.php" method="POST">
 
+            <form action="profile.php" method="POST">
+            <?php if(isset($user)) { ?> 
                 <div class="form-group">
                     <label for="userName">User Name</label>
-                    <input required type="text" name="userName" class="form-control" value="<?php echo $user->name?>" />
+                    <input required type="text" name="userName" class="form-control" value="<?php echo $user->name ?? '' ?>" /> 
                 </div>
-
                 <div class="form-group">
                     <label for="userEmail">User Email</label>
-                    <input required type="email" name="userEmail" class="form-control" value="<?php echo $user->email?>" />
+                    <input required type="email" name="userEmail" class="form-control" value="<?php echo $user->email ?? '' ?>" />
                     <br />
                     <?php if(isset($emailTaken)) { ?> 
                     <p style="color: red"> <?php echo $emailTaken?> </p>
                     <?php } ?> 
                 </div>
-
+                <?php } else { ?>
+                <p> Usuário não encontrado. </p>
+                <?php } ?>
                 <button name="edit" class="btn btn-primary" type="submit">Atualize seus dados.</button>
 
             </form>
